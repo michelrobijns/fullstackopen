@@ -6,13 +6,21 @@ const Button = ({ onClick, text }) => {
   )
 }
 
+const StatisticLine = ({ text, value, unit }) => {
+  return (
+    <>
+      {text} {value} {unit}<br/>
+    </>
+  )
+}
+
 const Statistics = ({ good, neutral, bad }) => {
   const sum = good + neutral + bad
 
   if (sum === 0) {
     return (
       <p>
-        no feedback yet
+        No feedback given
       </p>
     )
   }
@@ -22,12 +30,12 @@ const Statistics = ({ good, neutral, bad }) => {
 
   return (
     <p>
-      good {good}<br/>
-      neutral {neutral}<br/>
-      bad {bad}<br/>
-      all {sum}<br/>
-      average {average}<br/>
-      positive {positive} %
+      <StatisticLine text={'good'} value={good} />
+      <StatisticLine text={'neutral'} value={neutral} />
+      <StatisticLine text={'bad'} value={bad} />
+      <StatisticLine text={'all'} value={sum} />
+      <StatisticLine text={'average'} value={average} />
+      <StatisticLine text={'positive'} value={positive} unit={'%'} />
     </p>
   )
 }
