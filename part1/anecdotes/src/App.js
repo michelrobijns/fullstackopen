@@ -1,5 +1,20 @@
 import { useState } from 'react'
 
+const Anecdote = ({ text, votes }) => {
+  return (
+    <>
+      <div>{text}</div>
+      <div>has {votes} votes</div>
+    </>
+  )
+}
+
+const Button = ({ onClick, text }) => {
+  return (
+    <button onClick={onClick}>{text}</button>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -11,18 +26,26 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.'
   ]
 
-  const [selected, getSelected] = useState(0)
+  const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(new Array(anecdotes.length).fill(0))
 
   const selectRandomAnecdote = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length)
 
-    getSelected(randomIndex)
+    setSelected(randomIndex)
+  }
+
+  const voteForAnecdote = () => {
+    const newPoints = [...points]
+    newPoints[selected] += 1
+    setPoints(newPoints)
   }
 
   return (
     <div>
-      {anecdotes[selected]}<br/>
-      <button onClick={selectRandomAnecdote}>next anecdote</button>
+      <Anecdote text={anecdotes[selected]} votes={points[selected]} />
+      <Button onClick={voteForAnecdote} text={'vote'} />
+      <Button onClick={selectRandomAnecdote} text={'next anecdote'} />
     </div>
   )
 }
