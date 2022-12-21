@@ -6,24 +6,24 @@ const Header = (props) => {
 
 const Part = (props) => {
   return (
-    <p>
-      {props.name} {props.exercises}
-    </p>
+    <p>{props.part.name} {props.part.exercises}</p>
   )
 }
 
 const Content = (props) => {
   return (
     <>
-      <Part name={props.course.parts[0].name} exercises={props.course.parts[0].exercises} />
-      <Part name={props.course.parts[1].name} exercises={props.course.parts[1].exercises} />
-      <Part name={props.course.parts[2].name} exercises={props.course.parts[2].exercises} />
+      <Part part={props.course.parts[0]} />
+      <Part part={props.course.parts[1]} />
+      <Part part={props.course.parts[2]} />
     </>
   )
 }
 
 const Total = (props) => {
-  const total = props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises
+  const total = props.course.parts.reduce((previous, current) => {
+    return previous + current.exercises
+  }, 0)
 
   return (
     <p>Number of exercises {total}</p>
@@ -50,11 +50,11 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <Header course={course} />
       <Content course={course} />
       <Total course={course}/>
-    </div>
+    </>
   )
 }
 

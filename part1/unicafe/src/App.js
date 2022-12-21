@@ -18,28 +18,28 @@ const StatisticLine = ({ text, value, unit }) => {
 const Statistics = ({ good, neutral, bad }) => {
   const sum = good + neutral + bad
 
-  if (sum === 0) {
+  if (sum) {
+    const average = (good - bad) / sum
+    const positive = good / sum * 100
+
     return (
-      <p>
-        No feedback given
-      </p>
+      <table>
+        <tbody>
+          <StatisticLine text={'good'} value={good} />
+          <StatisticLine text={'neutral'} value={neutral} />
+          <StatisticLine text={'bad'} value={bad} />
+          <StatisticLine text={'all'} value={sum} />
+          <StatisticLine text={'average'} value={average} />
+          <StatisticLine text={'positive'} value={positive} unit={'%'} />
+        </tbody>
+      </table>
     )
   }
 
-  const average = (good - bad) / sum
-  const positive = good / sum * 100
-
   return (
-    <table>
-      <tbody>
-        <StatisticLine text={'good'} value={good} />
-        <StatisticLine text={'neutral'} value={neutral} />
-        <StatisticLine text={'bad'} value={bad} />
-        <StatisticLine text={'all'} value={sum} />
-        <StatisticLine text={'average'} value={average} />
-        <StatisticLine text={'positive'} value={positive} unit={'%'} />
-      </tbody>
-    </table>
+    <p>
+      No feedback given
+    </p>
   )
 }
 
@@ -62,14 +62,14 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <h1>Give feedback</h1>
       <Button onClick={increaseGoodByOne} text={'good'} />
       <Button onClick={increaseNeutralByOne} text={'neutral'} />
       <Button onClick={increaseBadByOne} text={'bad'} />
       <h1>Statistics</h1>
       <Statistics good={good} neutral={neutral} bad={bad} />
-    </div>
+    </>
   )
 }
 
